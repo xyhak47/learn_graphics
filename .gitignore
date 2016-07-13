@@ -28,5 +28,7 @@
 *.out
 *.app
 
-
+# Custom added folder
+Debug/
+Release/
 
