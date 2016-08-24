@@ -45,12 +45,12 @@ void linePlot(wcPt2D dataPts[5], GLfloat offsety)
 
 void displayFunc()
 {
+	/***************draw line ******************/
 	glClear(GL_COLOR_BUFFER_BIT);
 	glColor3f(0.0, 0.0, 1.0);
 
 	/* invoke a procedure here to draw coordinate axes */
 	glEnable(GL_LINE_STIPPLE);
-
 
 	glLineStipple(1, 0x1C47);
 	linePlot(dataPts,0);
@@ -63,8 +63,78 @@ void displayFunc()
 	glLineWidth(3.0);
 	linePlot(dataPts,20);
 
-
 	glDisable(GL_LINE_STIPPLE);
+
+
+	/********************draw 3 colors triangles ************************/
+	glShadeModel(GL_SMOOTH); // default is GL_SMOOTH
+	glBegin(GL_TRIANGLES);
+		glColor3f(0.0, 0.0, 1.0);
+		glVertex2i(50, 50);
+		glColor3f(1.0, 0.0, 0.0);
+		glVertex2i(150, 50);
+		glColor3f(0.0, 1.0, 0.0);
+		glVertex2i(75, 150);
+	glEnd();
+
+	/********************draw  POLYGON triangles ************************/
+	GLuint polyginlist0 = glGenLists(1);
+	glNewList(polyginlist0, GL_COMPILE);
+		glBegin(GL_POLYGON);
+			glVertex2i(250, 50);
+			glVertex2i(300, 50);
+			glVertex2i(330, 70);
+			glVertex2i(280, 100);
+			glVertex2i(230, 70);
+		glEnd();
+	glEndList();
+
+	glColor3f(0.0, 1.0, 0.0);
+	glCallList(polyginlist0);
+
+	glColor3f(1.0, 0.0, 0.0);
+	glPolygonMode(GL_FRONT, GL_LINE);
+	glCallList(polyginlist0);
+
+
+	glPolygonMode(GL_FRONT, GL_FILL);
+	GLuint polyginlist1 = glGenLists(1);
+	glNewList(polyginlist1, GL_COMPILE);
+		glBegin(GL_POLYGON);
+			glVertex2i(350, 50);
+			glVertex2i(400, 50);
+			glVertex2i(430, 70);
+			glVertex2i(380, 100);
+			glVertex2i(330, 70);
+		glEnd();
+	glEndList();
+
+	glColor3f(0.0, 1.0, 0.0);
+	glEnable(GL_POLYGON_OFFSET_FILL);
+	glPolygonOffset(1.0, 1.0);
+	glCallList(polyginlist1);
+	glDisable(GL_POLYGON_OFFSET_FILL);
+
+	glColor3f(1.0, 0.0, 0.0);
+	glPolygonMode(GL_FRONT, GL_LINE);
+	glCallList(polyginlist1);
+
+	/* **********draw edge flag **********/
+	glBegin(GL_POLYGON);
+		glVertex2i(250, 150);
+		glEdgeFlag(true);
+		glVertex2i(300, 150);
+		glEdgeFlag(true);
+		glVertex2i(330, 170);
+	glEnd();
+
+
+	glFlush();
+}
+
+void drawPolygon5()
+{
+
 }
 
 void main(int argc, char** argv)

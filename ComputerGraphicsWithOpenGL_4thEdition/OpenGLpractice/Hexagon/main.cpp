@@ -44,20 +44,17 @@ static void init()
 	*/
 	regHex = glGenLists(1); // get an identifier for the display list
 	glNewList(regHex, GL_COMPILE);
-
-	glColor3f(1.0, 0.0, 0.0);
-
-	glBegin(GL_POLYGON);
-	for (k = 0; k < polygonSide; k++)
-	{
-		theta = TWO_PI / polygonSide * k;
-		GLuint x = circleCenter.getX() + radius * cos(theta);
-		GLuint y = circleCenter.getY() + radius * sin(theta);
-		hexVertex.setCoors(x, y);
-		glVertex2i(hexVertex.getX(), hexVertex.getY());
-	}
-	glEnd();
-
+		glColor3f(1.0, 0.0, 0.0);
+		glBegin(GL_POLYGON);
+			for (k = 0; k < polygonSide; k++)
+			{
+				theta = TWO_PI / polygonSide * k;
+				GLuint x = circleCenter.getX() + radius * cos(theta);
+				GLuint y = circleCenter.getY() + radius * sin(theta);
+				hexVertex.setCoors(x, y);
+				glVertex2i(hexVertex.getX(), hexVertex.getY());
+			}
+		glEnd();
 	glEndList();
 }
 
